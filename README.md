@@ -2,7 +2,7 @@
 
 Sitio de **ofertas curadas con enlaces de afiliado** (Amazon, Mercado Libre, Éxito) construido con Payload CMS 3 + Next.js 15, bilingüe (español/inglés) y desplegado en Vercel.
 
-Basado en la infraestructura y arquitectura modular de la plataforma Zoren. Consulta [CLAUDE.md](./CLAUDE.md) para la guía completa de arquitectura, dominio y convenciones.
+Consulta [CLAUDE.md](./CLAUDE.md) para la guía completa de arquitectura, dominio y convenciones.
 
 ## Características
 
