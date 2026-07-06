@@ -5,16 +5,26 @@ import { LogoIcon } from '@/shared/components/icons/logo/logo.component'
 import { getCachedGlobal } from '@/shared/utils/get-globals.util'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
-import { Suspense } from 'react'
+import { Suspense, type ReactNode } from 'react'
 
 const { COMPANY_NAME } = process.env
 
-export async function Footer() {
+type Props = {
+  /**
+   * Newsletter signup widget injected by the app composition root. The footer
+   * (an infrastructure layout shell) stays domain-agnostic and never imports
+   * a feature module.
+   */
+  newsletterSlot?: ReactNode
+}
+
+export async function Footer({ newsletterSlot }: Props) {
   const footer: Footer = await getCachedGlobal('footer', 1)()
   const menu = footer.navItems || []
   const copyrightDate = new Date().getFullYear()
   const skeleton = 'w-full h-6 animate-pulse rounded bg-neutral-200'
   const t = await getTranslations('common')
+  const tNewsletter = await getTranslations('newsletter')
 
   return (
     <footer className="text-sm">
@@ -40,19 +50,32 @@ export async function Footer() {
           >
             <FooterMenu menu={menu} />
           </Suspense>
+
+          {newsletterSlot && (
+            <div className="flex flex-col gap-3 md:ml-auto md:max-w-sm">
+              <h3 className="font-semibold text-base-content">{tNewsletter('footerTitle')}</h3>
+              <p className="text-base-content/70">{tNewsletter('footerSubtitle')}</p>
+              {newsletterSlot}
+            </div>
+          )}
         </div>
       </div>
-      {COMPANY_NAME && (
-        <div className="border-t py-6 text-sm">
-          <div className="container mx-auto flex w-full flex-col items-center gap-1 md:flex-row md:gap-0">
+      <div className="border-t py-6 text-sm">
+        <div className="container mx-auto flex w-full flex-col items-center gap-1 md:flex-row md:justify-between md:gap-0">
+          {COMPANY_NAME && (
             <p>
               &copy; {copyrightDate} {COMPANY_NAME}
               {COMPANY_NAME.length && !COMPANY_NAME.endsWith('.') ? '.' : ''}{' '}
               {t('allRightsReserved')}
             </p>
-          </div>
+          )}
+          <p className="text-base-content/60">
+            <Link className="underline-offset-4 hover:underline" href="/divulgacion-afiliados">
+              {t('affiliateDisclosureLink')}
+            </Link>
+          </p>
         </div>
-      )}
+      </div>
     </footer>
   )
 }

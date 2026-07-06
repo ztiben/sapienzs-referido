@@ -9,11 +9,6 @@ type SeedPageDefinition = {
 
 const SEED_PAGES: SeedPageDefinition[] = [
   {
-    title: 'Home',
-    slug: 'home',
-    isSystemPage: false,
-  },
-  {
     title: 'Divulgación de afiliados',
     slug: 'divulgacion-afiliados',
     isSystemPage: false,

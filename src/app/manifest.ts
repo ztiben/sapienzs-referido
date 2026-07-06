@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
  
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Zoren Demo',
+    name: 'Sapyenzs Referido',
     start_url: '/',
     display: 'standalone',
     icons: [
