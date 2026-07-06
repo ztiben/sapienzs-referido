@@ -19,6 +19,11 @@ const nextConfig = {
           protocol: url.protocol.replace(':', ''),
         }
       }),
+      // Media served from Vercel Blob (deal images, retailer logos).
+      {
+        hostname: '*.public.blob.vercel-storage.com',
+        protocol: 'https',
+      },
     ],
   },
   reactStrictMode: true,

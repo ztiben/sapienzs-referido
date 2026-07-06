@@ -32,6 +32,13 @@ test.describe('Admin Panel', () => {
     await expect(listViewArtifact).toBeVisible()
   })
 
+  test('deals collection is visible in the admin', async () => {
+    await page.goto('http://localhost:3000/admin/collections/deals')
+    await expect(page).toHaveURL('http://localhost:3000/admin/collections/deals')
+    const listViewArtifact = page.locator('h1', { hasText: 'Ofertas' }).first()
+    await expect(listViewArtifact).toBeVisible()
+  })
+
   test('can navigate to edit view', async () => {
     await page.goto('http://localhost:3000/admin/collections/users/create')
     await expect(page).toHaveURL(/\/admin\/collections\/users\/[a-zA-Z0-9-_]+/)

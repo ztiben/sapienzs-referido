@@ -5,7 +5,6 @@ export const testUser = {
   name: 'Test User',
   email: 'dev@payloadcms.com',
   password: 'test',
-  phone: '+573123123123',
 }
 
 /**
