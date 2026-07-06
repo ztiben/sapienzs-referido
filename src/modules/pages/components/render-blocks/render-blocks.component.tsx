@@ -6,7 +6,6 @@ import { ContentBlock } from '@/modules/pages/blocks/content/components/content/
 import { FormBlock } from '@/modules/pages/blocks/form/components/form-block/form-block.component.client'
 import { InstagramFeedBlock } from '@/modules/pages/blocks/instagram-feed/components/instagram-feed-block/instagram-feed-block.component'
 import { MediaBlock } from '@/modules/pages/blocks/media-block/components/media-block/media-block.component'
-import { SocialSellingBlockComponent } from '@/modules/pages/blocks/social-selling/components/social-selling.component'
 import { ThreeItemGridBlock } from '@/modules/pages/blocks/three-item-grid/components/three-item-grid.component'
 import { toKebabCase } from '@/shared/utils/to-kebab-case.util'
 import React, { Fragment } from 'react'
@@ -22,7 +21,6 @@ const blockComponents = {
   formBlock: FormBlock,
   instagramFeed: InstagramFeedBlock,
   mediaBlock: MediaBlock,
-  socialSelling: SocialSellingBlockComponent,
   threeItemGrid: ThreeItemGridBlock,
 }
 

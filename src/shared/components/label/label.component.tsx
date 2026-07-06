@@ -1,15 +1,17 @@
 import clsx from 'clsx'
 import React from 'react'
 
+import type { SupportedCurrency } from '@/shared/bl/format-price.bl'
 import { Price } from '@/shared/components/price/price.component'
 
 type Props = {
   amount?: number
+  currencyCode?: SupportedCurrency
   position?: 'bottom' | 'center'
   title: string
 }
 
-export const Label: React.FC<Props> = ({ amount, position = 'bottom', title }) => {
+export const Label: React.FC<Props> = ({ amount, currencyCode, position = 'bottom', title }) => {
   return (
     <div
       className={clsx('absolute bottom-0 left-0 flex w-full px-4 pb-4 @container/label', {
@@ -23,8 +25,8 @@ export const Label: React.FC<Props> = ({ amount, position = 'bottom', title }) =
 
         <Price
           amount={amount}
+          currencyCode={currencyCode}
           className="flex-none rounded-full bg-neutral p-2 text-neutral-content"
-          currencyCodeClassName="hidden @[275px]/label:inline"
         />
       </div>
     </div>

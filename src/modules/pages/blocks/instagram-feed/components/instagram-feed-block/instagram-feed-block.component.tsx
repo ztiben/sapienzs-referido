@@ -1,9 +1,5 @@
+import type { Deal, InstagramFeedBlock as InstagramFeedBlockProps } from '@/payload-types'
 import type { DisplayItem } from '@/shared/utils/to-display-item.util'
-import type {
-  InstagramFeedBlock as InstagramFeedBlockProps,
-  Product,
-  Service,
-} from '@/payload-types'
 
 import { toDisplayItem } from '@/shared/utils/to-display-item.util'
 import type { DefaultDocumentIDType } from 'payload'
@@ -44,8 +40,7 @@ export const InstagramFeedBlock: React.FC<
     const { linkedDoc } = post
     if (!linkedDoc || typeof linkedDoc.value !== 'object') continue
 
-    const collection = linkedDoc.relationTo as 'products' | 'services'
-    const item = toDisplayItem(linkedDoc.value as Product | Service, collection)
+    const item = toDisplayItem(linkedDoc.value as Deal)
 
     parsedPosts.push({
       shortcode: parsed.shortcode,

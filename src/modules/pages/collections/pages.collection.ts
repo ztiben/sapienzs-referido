@@ -11,7 +11,6 @@ import { FormBlock } from '@/modules/pages/blocks/form/form.config'
 import { hero } from '@/modules/pages/blocks/hero/hero.config'
 import { InstagramFeed } from '@/modules/pages/blocks/instagram-feed/instagram-feed.config'
 import { MediaBlock } from '@/infrastructure/blocks/media-block.config'
-import { SocialSellingBlock } from '@/modules/pages/blocks/social-selling/social-selling.config'
 import { ThreeItemGrid } from '@/modules/pages/blocks/three-item-grid/three-item-grid.config'
 import { generatePreviewPath } from '@/shared/utils/generate-preview-path.util'
 import {
@@ -146,7 +145,6 @@ export const Pages: CollectionConfig = {
                 ThreeItemGrid,
                 Banner,
                 FormBlock,
-                SocialSellingBlock,
                 InstagramFeed,
               ],
               required: true,

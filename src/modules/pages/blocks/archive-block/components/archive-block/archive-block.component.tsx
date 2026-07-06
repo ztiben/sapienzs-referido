@@ -1,9 +1,10 @@
+import type { ArchiveBlock as ArchiveBlockProps, Deal } from '@/payload-types'
 import type { DisplayItem } from '@/shared/utils/to-display-item.util'
-import type { ArchiveBlock as ArchiveBlockProps, Product, Service } from '@/payload-types'
 
-import { toDisplayItem } from '@/shared/utils/to-display-item.util'
 import { RichText } from '@/modules/pages/components/rich-text/rich-text.component'
+import { toDisplayItem } from '@/shared/utils/to-display-item.util'
 import configPromise from '@payload-config'
+import { getLocale } from 'next-intl/server'
 import { DefaultDocumentIDType, getPayload } from 'payload'
 import React from 'react'
 
@@ -15,15 +16,7 @@ export const ArchiveBlock: React.FC<
     className?: string
   }
 > = async (props) => {
-  const {
-    id,
-    categories,
-    introContent,
-    limit: limitFromProps,
-    populateBy,
-    selectedDocs,
-    showFrom,
-  } = props
+  const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
 
   const limit = limitFromProps || 3
 
@@ -31,6 +24,7 @@ export const ArchiveBlock: React.FC<
 
   if (populateBy === 'category') {
     const payload = await getPayload({ config: configPromise })
+    const locale = (await getLocale()) as 'es' | 'en'
 
     const flattenedCategories = categories?.map((category) => {
       if (typeof category === 'object') return category.id
@@ -39,41 +33,28 @@ export const ArchiveBlock: React.FC<
 
     const whereClause =
       flattenedCategories && flattenedCategories.length > 0
-        ? { categories: { in: flattenedCategories } }
+        ? { category: { in: flattenedCategories } }
         : undefined
 
-    const collectionsToFetch =
-      showFrom === 'all'
-        ? (['products', 'services'] as const)
-        : showFrom === 'services'
-          ? (['services'] as const)
-          : (['products'] as const)
-
-    const fetches = collectionsToFetch.map(async (collection) => {
-      const result = await payload.find({
-        collection,
-        depth: 1,
-        limit,
-        draft: false,
-        overrideAccess: false,
-        where: {
-          and: [...(whereClause ? [whereClause] : []), { _status: { equals: 'published' } }],
-        },
-      })
-      return result.docs.map((doc) => toDisplayItem(doc as Product | Service, collection))
+    const result = await payload.find({
+      collection: 'deals',
+      depth: 1,
+      limit,
+      locale,
+      draft: false,
+      overrideAccess: false,
+      where: {
+        and: [...(whereClause ? [whereClause] : []), { _status: { equals: 'published' } }],
+      },
     })
 
-    const results = await Promise.all(fetches)
-    items = results.flat()
+    items = result.docs.map((doc) => toDisplayItem(doc as Deal))
   } else {
     if (selectedDocs?.length) {
       items = selectedDocs
         .map((doc) => {
           if (typeof doc.value === 'object' && doc.value !== null) {
-            return toDisplayItem(
-              doc.value as Product | Service,
-              doc.relationTo as 'products' | 'services',
-            )
+            return toDisplayItem(doc.value as Deal)
           }
           return null
         })

@@ -1,6 +1,5 @@
 'use client'
 
-import { currenciesConfig } from '@/infrastructure/currencies/currencies.config'
 import { InstagramIcon } from '@/shared/components/icons/instagram/instagram.component'
 import { Media } from '@/shared/components/media/media.component'
 import { Price } from '@/shared/components/price/price.component'
@@ -71,7 +70,7 @@ const InstagramFeedCard: React.FC<{ post: ParsedInstagramPost }> = ({ post }) =>
               amount={item.price}
               as="p"
               className="text-sm font-semibold text-base-content"
-              currencyCode={currenciesConfig.defaultCurrency}
+              currencyCode={item.currency}
             />
           )}
           <p className="truncate text-sm text-base-content/70">{item.title}</p>

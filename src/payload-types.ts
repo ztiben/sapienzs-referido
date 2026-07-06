@@ -7,11 +7,6 @@
  */
 
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "OrderStatus".
- */
-export type OrderStatus = ('processing' | 'completed' | 'cancelled' | 'refunded') | null;
-/**
  * Supported timezones in IANA format.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -76,26 +71,13 @@ export interface Config {
     pages: Page;
     categories: Category;
     media: Media;
-    'social-selling': SocialSelling;
-    countries: Country;
-    cities: City;
-    'whatsapp-accounts': WhatsappAccount;
-    'whatsapp-messages': WhatsappMessage;
+    retailers: Retailer;
+    deals: Deal;
+    favorites: Favorite;
+    'deal-reports': DealReport;
+    subscribers: Subscriber;
     forms: Form;
     'form-submissions': FormSubmission;
-    addresses: Address;
-    variants: Variant;
-    variantTypes: VariantType;
-    variantOptions: VariantOption;
-    products: Product;
-    carts: Cart;
-    orders: Order;
-    transactions: Transaction;
-    stores: Store;
-    services: Service;
-    staff: Staff;
-    bookings: Booking;
-    'staff-blocks': StaffBlock;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -103,31 +85,7 @@ export interface Config {
   };
   collectionsJoins: {
     users: {
-      orders: 'orders';
-      carts: 'carts';
-      addresses: 'addresses';
-      bookings: 'bookings';
-    };
-    countries: {
-      cities: 'cities';
-    };
-    variantTypes: {
-      options: 'variantOptions';
-    };
-    products: {
-      variants: 'variants';
-    };
-    stores: {
-      bookings: 'bookings';
-    };
-    services: {
-      stores: 'stores';
-      staff: 'staff';
-      bookings: 'bookings';
-    };
-    staff: {
-      blocks: 'staff-blocks';
-      bookings: 'bookings';
+      favorites: 'favorites';
     };
   };
   collectionsSelect: {
@@ -135,26 +93,13 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    'social-selling': SocialSellingSelect<false> | SocialSellingSelect<true>;
-    countries: CountriesSelect<false> | CountriesSelect<true>;
-    cities: CitiesSelect<false> | CitiesSelect<true>;
-    'whatsapp-accounts': WhatsappAccountsSelect<false> | WhatsappAccountsSelect<true>;
-    'whatsapp-messages': WhatsappMessagesSelect<false> | WhatsappMessagesSelect<true>;
+    retailers: RetailersSelect<false> | RetailersSelect<true>;
+    deals: DealsSelect<false> | DealsSelect<true>;
+    favorites: FavoritesSelect<false> | FavoritesSelect<true>;
+    'deal-reports': DealReportsSelect<false> | DealReportsSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
-    addresses: AddressesSelect<false> | AddressesSelect<true>;
-    variants: VariantsSelect<false> | VariantsSelect<true>;
-    variantTypes: VariantTypesSelect<false> | VariantTypesSelect<true>;
-    variantOptions: VariantOptionsSelect<false> | VariantOptionsSelect<true>;
-    products: ProductsSelect<false> | ProductsSelect<true>;
-    carts: CartsSelect<false> | CartsSelect<true>;
-    orders: OrdersSelect<false> | OrdersSelect<true>;
-    transactions: TransactionsSelect<false> | TransactionsSelect<true>;
-    stores: StoresSelect<false> | StoresSelect<true>;
-    services: ServicesSelect<false> | ServicesSelect<true>;
-    staff: StaffSelect<false> | StaffSelect<true>;
-    bookings: BookingsSelect<false> | BookingsSelect<true>;
-    'staff-blocks': StaffBlocksSelect<false> | StaffBlocksSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -163,42 +108,22 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('es' | 'en') | ('es' | 'en')[];
   globals: {
     header: Header;
     footer: Footer;
     configuration: Configuration;
-    'mercadopago-payment': MercadopagoPayment;
-    'whatsapp-payment': WhatsappPayment;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     configuration: ConfigurationSelect<false> | ConfigurationSelect<true>;
-    'mercadopago-payment': MercadopagoPaymentSelect<false> | MercadopagoPaymentSelect<true>;
-    'whatsapp-payment': WhatsappPaymentSelect<false> | WhatsappPaymentSelect<true>;
   };
-  locale: null;
+  locale: 'es' | 'en';
   user: User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
-  };
-  /**
-   * Generated by the Payload Ecommerce plugin
-   */
-  ecommerce: {
-    collections: {
-      addresses: Address;
-      carts: Cart;
-      customers?: User;
-      orders: Order;
-      products: Product;
-      transactions: Transaction;
-      variantOptions: VariantOption;
-      variants: Variant;
-      variantTypes: VariantType;
-    };
   };
 }
 export interface UserAuthOperations {
@@ -226,25 +151,9 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   name: string;
-  phone?: string | null;
   roles?: ('admin' | 'customer')[] | null;
-  orders?: {
-    docs?: (number | Order)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  carts?: {
-    docs?: (number | Cart)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  addresses?: {
-    docs?: (number | Address)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  bookings?: {
-    docs?: (number | Booking)[];
+  favorites?: {
+    docs?: (number | Favorite)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -269,43 +178,20 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "orders".
+ * via the `definition` "favorites".
  */
-export interface Order {
+export interface Favorite {
   id: number;
-  shippingCost?: number | null;
-  items?:
-    | {
-        product?: (number | null) | Product;
-        variant?: (number | null) | Variant;
-        quantity: number;
-        id?: string | null;
-      }[]
-    | null;
-  shippingAddress: {
-    name: string;
-    company?: string | null;
-    phone?: string | null;
-    addressLine1: string;
-    city: string;
-    state?: string | null;
-    country: string;
-    postalCode?: string | null;
-  };
-  customer?: (number | null) | User;
-  customerEmail?: string | null;
-  transaction?: (number | null) | Transaction;
-  status?: OrderStatus;
-  amount?: number | null;
-  currency?: 'COP' | null;
+  user: number | User;
+  deal: number | Deal;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
+ * via the `definition` "deals".
  */
-export interface Product {
+export interface Deal {
   id: number;
   title: string;
   description?: {
@@ -323,28 +209,28 @@ export interface Product {
     };
     [k: string]: unknown;
   } | null;
-  gallery: {
-    image: number | Media;
-    variantOption?: (number | null) | VariantOption;
-    id?: string | null;
-  }[];
-  layout?: (CallToActionBlock | ContentBlock | MediaBlock)[] | null;
-  enableVariants?: boolean | null;
-  inventory?: number | null;
-  infiniteInventory?: boolean | null;
-  variantTypes?: (number | VariantType)[] | null;
-  variants?: {
-    docs?: (number | Variant)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  priceInCOPEnabled?: boolean | null;
-  priceInCOP?: number | null;
-  relatedProducts?: (number | Product)[] | null;
+  image: number | Media;
+  retailer: number | Retailer;
+  category?: (number | null) | Category;
+  originalPrice: number;
+  dealPrice: number;
+  currency?: ('COP' | 'USD') | null;
   /**
-   * Habilitar este campo ocasiona que, en la página de descripción del producto, se oculte el botón de añadir al carrito y se muestre un botón que redirige a WhatsApp con el número configurado en la sección de Configuración (Globales).
+   * Raw product URL. The retailer affiliate template is applied when a visitor clicks the deal.
    */
-  redirectToWhatsApp?: boolean | null;
+  affiliateUrl: string;
+  startsAt?: string | null;
+  expiresAt?: string | null;
+  featured?: boolean | null;
+  clickCount?: number | null;
+  /**
+   * Provenance of the deal. Deals imported from retailer APIs are upserted by (retailer, externalId).
+   */
+  sync?: {
+    source?: ('manual' | 'api') | null;
+    externalId?: string | null;
+    lastSyncedAt?: string | null;
+  };
   meta?: {
     title?: string | null;
     /**
@@ -353,7 +239,6 @@ export interface Product {
     image?: (number | null) | Media;
     description?: string | null;
   };
-  categories?: (number | Category)[] | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -361,7 +246,6 @@ export interface Product {
   slug: string;
   updatedAt: string;
   createdAt: string;
-  deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
 }
 /**
@@ -400,80 +284,41 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variantOptions".
+ * via the `definition` "retailers".
  */
-export interface VariantOption {
+export interface Retailer {
   id: number;
-  _variantOptions_options_order?: string | null;
-  variantType: number | VariantType;
-  label: string;
-  /**
-   * should be defaulted or dynamic based on label
-   */
-  value: string;
-  updatedAt: string;
-  createdAt: string;
-  deletedAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variantTypes".
- */
-export interface VariantType {
-  id: number;
-  label: string;
   name: string;
-  options?: {
-    docs?: (number | VariantOption)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
+  logo?: (number | null) | Media;
+  websiteUrl?: string | null;
+  /**
+   * Template applied to every outbound deal link. Use {url} as the placeholder for the raw product URL, e.g. {url}?tag=sapyenzs-20. Leave empty to use the raw URL as-is.
+   */
+  affiliateTagTemplate?: string | null;
+  defaultCurrency?: ('COP' | 'USD') | null;
+  active?: boolean | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
-  deletedAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock".
+ * via the `definition` "categories".
  */
-export interface CallToActionBlock {
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?: {
-            relationTo: 'pages';
-            value: number | Page;
-          } | null;
-          url?: string | null;
-          label: string;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'cta';
+export interface Category {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -538,7 +383,6 @@ export interface Page {
     | ThreeItemGridBlock
     | BannerBlock
     | FormBlock
-    | SocialSellingBlock
     | InstagramFeedBlock
   )[];
   meta?: {
@@ -557,6 +401,49 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlock".
+ */
+export interface CallToActionBlock {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cta';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -634,20 +521,13 @@ export interface ArchiveBlock {
     [k: string]: unknown;
   } | null;
   populateBy?: ('category' | 'selection') | null;
-  showFrom?: ('products' | 'services' | 'all') | null;
   categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
-    | (
-        | {
-            relationTo: 'products';
-            value: number | Product;
-          }
-        | {
-            relationTo: 'services';
-            value: number | Service;
-          }
-      )[]
+    | {
+        relationTo: 'deals';
+        value: number | Deal;
+      }[]
     | null;
   id?: string | null;
   blockName?: string | null;
@@ -655,221 +535,26 @@ export interface ArchiveBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: number;
-  title: string;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services".
- */
-export interface Service {
-  id: number;
-  title: string;
-  modalities?: ('inStore' | 'delivery')[] | null;
-  durationMinutes: number;
-  bufferMinutes?: number | null;
-  priceInCOPEnabled?: boolean | null;
-  priceInCOP?: number | null;
-  stores?: {
-    docs?: (number | Store)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  staff?: {
-    docs?: (number | Staff)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  bookings?: {
-    docs?: (number | Booking)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  images: (number | Media)[];
-  layout?: (CallToActionBlock | ContentBlock | MediaBlock)[] | null;
-  /**
-   * Habilitar este campo ocasiona que, en la página de descripción del servicio, se oculte el formulario de reserva y se muestre un botón que redirige a WhatsApp con el número configurado en la sección de Configuración (Globales).
-   */
-  redirectToWhatsApp?: boolean | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
-  categories?: (number | Category)[] | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stores".
- */
-export interface Store {
-  id: number;
-  name: string;
-  phone?: string | null;
-  addressLine1: string;
-  city: string;
-  state?: string | null;
-  country: string;
-  postalCode?: string | null;
-  services?: (number | Service)[] | null;
-  bookings?: {
-    docs?: (number | Booking)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "bookings".
- */
-export interface Booking {
-  id: number;
-  customer: number | User;
-  startDatetime: string;
-  endDatetime: string;
-  service: number | Service;
-  staff: number | Staff;
-  modality: 'inStore' | 'delivery';
-  store?: (number | null) | Store;
-  address?: (number | null) | Address;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "staff".
- */
-export interface Staff {
-  id: number;
-  name: string;
-  email?: string | null;
-  phone?: string | null;
-  bio?: string | null;
-  services?: (number | Service)[] | null;
-  stores?: (number | Store)[] | null;
-  offersDelivery?: boolean | null;
-  workStartTime?: string | null;
-  workEndTime?: string | null;
-  workDays?: ('monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday')[] | null;
-  blocks?: {
-    docs?: (number | StaffBlock)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  bookings?: {
-    docs?: (number | Booking)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  photo?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "staff-blocks".
- */
-export interface StaffBlock {
-  id: number;
-  reason?: string | null;
-  startTime: string;
-  endTime: string;
-  repeat?: ('monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday')[] | null;
-  staff: number | Staff;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "addresses".
- */
-export interface Address {
-  id: number;
-  customer?: (number | null) | User;
-  name: string;
-  company?: string | null;
-  phone?: string | null;
-  addressLine1: string;
-  city: string;
-  state?: string | null;
-  country: string;
-  postalCode?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CarouselBlock".
  */
 export interface CarouselBlock {
   populateBy?: ('category' | 'selection') | null;
-  showFrom?: ('products' | 'services' | 'all') | null;
   categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
-    | (
-        | {
-            relationTo: 'products';
-            value: number | Product;
-          }
-        | {
-            relationTo: 'services';
-            value: number | Service;
-          }
-      )[]
+    | {
+        relationTo: 'deals';
+        value: number | Deal;
+      }[]
     | null;
   /**
    * This field is auto-populated after-read
    */
   populatedDocs?:
-    | (
-        | {
-            relationTo: 'products';
-            value: number | Product;
-          }
-        | {
-            relationTo: 'services';
-            value: number | Service;
-          }
-      )[]
+    | {
+        relationTo: 'deals';
+        value: number | Deal;
+      }[]
     | null;
   /**
    * This field is auto-populated after-read
@@ -885,16 +570,10 @@ export interface CarouselBlock {
  */
 export interface ThreeItemGridBlock {
   items?:
-    | (
-        | {
-            relationTo: 'products';
-            value: number | Product;
-          }
-        | {
-            relationTo: 'services';
-            value: number | Service;
-          }
-      )[]
+    | {
+        relationTo: 'deals';
+        value: number | Deal;
+      }[]
     | null;
   id?: string | null;
   blockName?: string | null;
@@ -1109,34 +788,6 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "SocialSellingBlock".
- */
-export interface SocialSellingBlock {
-  links: (number | SocialSelling)[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'socialSelling';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "social-selling".
- */
-export interface SocialSelling {
-  id: number;
-  /**
-   * Optional text shown next to the icon, e.g. "Need help? Write us"
-   */
-  label?: string | null;
-  platform: 'whatsapp' | 'instagram' | 'facebook';
-  /**
-   * Full link, e.g. https://wa.me/573001234567?text=Hello
-   */
-  link: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "InstagramFeedBlock".
  */
 export interface InstagramFeedBlock {
@@ -1151,17 +802,12 @@ export interface InstagramFeedBlock {
          */
         handle?: string | null;
         /**
-         * Link a product or service to display below the Instagram post
+         * Link a deal to display below the Instagram post
          */
-        linkedDoc:
-          | {
-              relationTo: 'products';
-              value: number | Product;
-            }
-          | {
-              relationTo: 'services';
-              value: number | Service;
-            };
+        linkedDoc: {
+          relationTo: 'deals';
+          value: number | Deal;
+        };
         id?: string | null;
       }[]
     | null;
@@ -1171,169 +817,30 @@ export interface InstagramFeedBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variants".
+ * via the `definition` "deal-reports".
  */
-export interface Variant {
+export interface DealReport {
   id: number;
-  infiniteInventory?: boolean | null;
+  deal: number | Deal;
+  user?: (number | null) | User;
+  status?: ('pending' | 'confirmed' | 'dismissed') | null;
+  note?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: number;
+  email: string;
+  locale?: ('es' | 'en') | null;
+  status?: ('subscribed' | 'unsubscribed') | null;
   /**
-   * Used for administrative purposes, not shown to customers. This is populated by default.
+   * Where the signup came from (footer, home-cta, ...)
    */
-  title?: string | null;
-  product: number | Product;
-  options: (number | VariantOption)[];
-  inventory?: number | null;
-  priceInCOPEnabled?: boolean | null;
-  priceInCOP?: number | null;
-  updatedAt: string;
-  createdAt: string;
-  deletedAt?: string | null;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "transactions".
- */
-export interface Transaction {
-  id: number;
-  receipt?: (number | null) | Media;
-  items?:
-    | {
-        product?: (number | null) | Product;
-        variant?: (number | null) | Variant;
-        quantity: number;
-        id?: string | null;
-      }[]
-    | null;
-  paymentMethod?: 'mercadopago' | null;
-  mercadopago?: {
-    preferenceId?: string | null;
-    paymentId?: string | null;
-  };
-  billingAddress?: {
-    name?: string | null;
-    company?: string | null;
-    phone?: string | null;
-    addressLine1?: string | null;
-    city?: string | null;
-    state?: string | null;
-    country?: string | null;
-    postalCode?: string | null;
-  };
-  shippingAddress?: {
-    name?: string | null;
-    company?: string | null;
-    phone?: string | null;
-    addressLine1?: string | null;
-    city?: string | null;
-    state?: string | null;
-    country?: string | null;
-    postalCode?: string | null;
-  };
-  status: 'pending' | 'succeeded' | 'failed' | 'cancelled' | 'expired' | 'refunded';
-  customer?: (number | null) | User;
-  customerEmail?: string | null;
-  order?: (number | null) | Order;
-  cart?: (number | null) | Cart;
-  amount?: number | null;
-  currency?: 'COP' | null;
-  shippingCost?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "carts".
- */
-export interface Cart {
-  id: number;
-  items?:
-    | {
-        product?: (number | null) | Product;
-        variant?: (number | null) | Variant;
-        quantity: number;
-        id?: string | null;
-      }[]
-    | null;
-  secret?: string | null;
-  customer?: (number | null) | User;
-  purchasedAt?: string | null;
-  status?: ('active' | 'purchased' | 'abandoned') | null;
-  subtotal?: number | null;
-  currency?: 'COP' | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * The coverage you set determines which countries and cities customers can choose when creating an address
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "countries".
- */
-export interface Country {
-  id: number;
-  name: string;
-  cities?: {
-    docs?: (number | City)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cities".
- */
-export interface City {
-  id: number;
-  name: string;
-  country: number | Country;
-  priceInCOPEnabled?: boolean | null;
-  priceInCOP?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "whatsapp-accounts".
- */
-export interface WhatsappAccount {
-  id: number;
-  name: string;
-  /**
-   * Meta "Phone number ID" of the sending number (not the phone number itself)
-   */
-  phoneNumberId: string;
-  wabaId?: string | null;
-  displayPhoneNumber?: string | null;
-  /**
-   * Write-only: it is stored encrypted and never displayed back. Leave empty to keep the current token.
-   */
-  accessToken: string;
-  status: 'active' | 'disabled';
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "whatsapp-messages".
- */
-export interface WhatsappMessage {
-  id: number;
-  messageId: string;
-  direction: 'inbound' | 'outbound';
-  status?: ('received' | 'sent' | 'failed') | null;
-  /**
-   * Empty when handled with environment (test) credentials
-   */
-  account?: (number | null) | WhatsappAccount;
-  waFrom?: string | null;
-  waTo?: string | null;
-  profileName?: string | null;
-  type?: string | null;
-  body?: string | null;
-  messageTimestamp?: string | null;
+  source?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1395,24 +902,24 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'social-selling';
-        value: number | SocialSelling;
+        relationTo: 'retailers';
+        value: number | Retailer;
       } | null)
     | ({
-        relationTo: 'countries';
-        value: number | Country;
+        relationTo: 'deals';
+        value: number | Deal;
       } | null)
     | ({
-        relationTo: 'cities';
-        value: number | City;
+        relationTo: 'favorites';
+        value: number | Favorite;
       } | null)
     | ({
-        relationTo: 'whatsapp-accounts';
-        value: number | WhatsappAccount;
+        relationTo: 'deal-reports';
+        value: number | DealReport;
       } | null)
     | ({
-        relationTo: 'whatsapp-messages';
-        value: number | WhatsappMessage;
+        relationTo: 'subscribers';
+        value: number | Subscriber;
       } | null)
     | ({
         relationTo: 'forms';
@@ -1421,58 +928,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'form-submissions';
         value: number | FormSubmission;
-      } | null)
-    | ({
-        relationTo: 'addresses';
-        value: number | Address;
-      } | null)
-    | ({
-        relationTo: 'variants';
-        value: number | Variant;
-      } | null)
-    | ({
-        relationTo: 'variantTypes';
-        value: number | VariantType;
-      } | null)
-    | ({
-        relationTo: 'variantOptions';
-        value: number | VariantOption;
-      } | null)
-    | ({
-        relationTo: 'products';
-        value: number | Product;
-      } | null)
-    | ({
-        relationTo: 'carts';
-        value: number | Cart;
-      } | null)
-    | ({
-        relationTo: 'orders';
-        value: number | Order;
-      } | null)
-    | ({
-        relationTo: 'transactions';
-        value: number | Transaction;
-      } | null)
-    | ({
-        relationTo: 'stores';
-        value: number | Store;
-      } | null)
-    | ({
-        relationTo: 'services';
-        value: number | Service;
-      } | null)
-    | ({
-        relationTo: 'staff';
-        value: number | Staff;
-      } | null)
-    | ({
-        relationTo: 'bookings';
-        value: number | Booking;
-      } | null)
-    | ({
-        relationTo: 'staff-blocks';
-        value: number | StaffBlock;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1522,12 +977,8 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
-  phone?: T;
   roles?: T;
-  orders?: T;
-  carts?: T;
-  addresses?: T;
-  bookings?: T;
+  favorites?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1587,7 +1038,6 @@ export interface PagesSelect<T extends boolean = true> {
         threeItemGrid?: T | ThreeItemGridBlockSelect<T>;
         banner?: T | BannerBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
-        socialSelling?: T | SocialSellingBlockSelect<T>;
         instagramFeed?: T | InstagramFeedBlockSelect<T>;
       };
   meta?:
@@ -1669,7 +1119,6 @@ export interface MediaBlockSelect<T extends boolean = true> {
 export interface ArchiveBlockSelect<T extends boolean = true> {
   introContent?: T;
   populateBy?: T;
-  showFrom?: T;
   categories?: T;
   limit?: T;
   selectedDocs?: T;
@@ -1682,7 +1131,6 @@ export interface ArchiveBlockSelect<T extends boolean = true> {
  */
 export interface CarouselBlockSelect<T extends boolean = true> {
   populateBy?: T;
-  showFrom?: T;
   categories?: T;
   limit?: T;
   selectedDocs?: T;
@@ -1718,15 +1166,6 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "SocialSellingBlock_select".
- */
-export interface SocialSellingBlockSelect<T extends boolean = true> {
-  links?: T;
   id?: T;
   blockName?: T;
 }
@@ -1778,66 +1217,89 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "social-selling_select".
+ * via the `definition` "retailers_select".
  */
-export interface SocialSellingSelect<T extends boolean = true> {
-  label?: T;
-  platform?: T;
-  link?: T;
+export interface RetailersSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  websiteUrl?: T;
+  affiliateTagTemplate?: T;
+  defaultCurrency?: T;
+  active?: T;
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "countries_select".
+ * via the `definition` "deals_select".
  */
-export interface CountriesSelect<T extends boolean = true> {
-  name?: T;
-  cities?: T;
+export interface DealsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
+  retailer?: T;
+  category?: T;
+  originalPrice?: T;
+  dealPrice?: T;
+  currency?: T;
+  affiliateUrl?: T;
+  startsAt?: T;
+  expiresAt?: T;
+  featured?: T;
+  clickCount?: T;
+  sync?:
+    | T
+    | {
+        source?: T;
+        externalId?: T;
+        lastSyncedAt?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "favorites_select".
+ */
+export interface FavoritesSelect<T extends boolean = true> {
+  user?: T;
+  deal?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cities_select".
+ * via the `definition` "deal-reports_select".
  */
-export interface CitiesSelect<T extends boolean = true> {
-  name?: T;
-  country?: T;
-  priceInCOPEnabled?: T;
-  priceInCOP?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "whatsapp-accounts_select".
- */
-export interface WhatsappAccountsSelect<T extends boolean = true> {
-  name?: T;
-  phoneNumberId?: T;
-  wabaId?: T;
-  displayPhoneNumber?: T;
-  accessToken?: T;
+export interface DealReportsSelect<T extends boolean = true> {
+  deal?: T;
+  user?: T;
   status?: T;
+  note?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "whatsapp-messages_select".
+ * via the `definition` "subscribers_select".
  */
-export interface WhatsappMessagesSelect<T extends boolean = true> {
-  messageId?: T;
-  direction?: T;
+export interface SubscribersSelect<T extends boolean = true> {
+  email?: T;
+  locale?: T;
   status?: T;
-  account?: T;
-  waFrom?: T;
-  waTo?: T;
-  profileName?: T;
-  type?: T;
-  body?: T;
-  messageTimestamp?: T;
+  source?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1972,328 +1434,6 @@ export interface FormSubmissionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "addresses_select".
- */
-export interface AddressesSelect<T extends boolean = true> {
-  customer?: T;
-  name?: T;
-  company?: T;
-  phone?: T;
-  addressLine1?: T;
-  city?: T;
-  state?: T;
-  country?: T;
-  postalCode?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variants_select".
- */
-export interface VariantsSelect<T extends boolean = true> {
-  infiniteInventory?: T;
-  title?: T;
-  product?: T;
-  options?: T;
-  inventory?: T;
-  priceInCOPEnabled?: T;
-  priceInCOP?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  deletedAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variantTypes_select".
- */
-export interface VariantTypesSelect<T extends boolean = true> {
-  label?: T;
-  name?: T;
-  options?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  deletedAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "variantOptions_select".
- */
-export interface VariantOptionsSelect<T extends boolean = true> {
-  _variantOptions_options_order?: T;
-  variantType?: T;
-  label?: T;
-  value?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  deletedAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products_select".
- */
-export interface ProductsSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  gallery?:
-    | T
-    | {
-        image?: T;
-        variantOption?: T;
-        id?: T;
-      };
-  layout?:
-    | T
-    | {
-        cta?: T | CallToActionBlockSelect<T>;
-        content?: T | ContentBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
-      };
-  enableVariants?: T;
-  inventory?: T;
-  infiniteInventory?: T;
-  variantTypes?: T;
-  variants?: T;
-  priceInCOPEnabled?: T;
-  priceInCOP?: T;
-  relatedProducts?: T;
-  redirectToWhatsApp?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        image?: T;
-        description?: T;
-      };
-  categories?: T;
-  generateSlug?: T;
-  slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  deletedAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "carts_select".
- */
-export interface CartsSelect<T extends boolean = true> {
-  items?:
-    | T
-    | {
-        product?: T;
-        variant?: T;
-        quantity?: T;
-        id?: T;
-      };
-  secret?: T;
-  customer?: T;
-  purchasedAt?: T;
-  status?: T;
-  subtotal?: T;
-  currency?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "orders_select".
- */
-export interface OrdersSelect<T extends boolean = true> {
-  shippingCost?: T;
-  items?:
-    | T
-    | {
-        product?: T;
-        variant?: T;
-        quantity?: T;
-        id?: T;
-      };
-  shippingAddress?:
-    | T
-    | {
-        name?: T;
-        company?: T;
-        phone?: T;
-        addressLine1?: T;
-        city?: T;
-        state?: T;
-        country?: T;
-        postalCode?: T;
-      };
-  customer?: T;
-  customerEmail?: T;
-  transaction?: T;
-  status?: T;
-  amount?: T;
-  currency?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "transactions_select".
- */
-export interface TransactionsSelect<T extends boolean = true> {
-  receipt?: T;
-  items?:
-    | T
-    | {
-        product?: T;
-        variant?: T;
-        quantity?: T;
-        id?: T;
-      };
-  paymentMethod?: T;
-  mercadopago?:
-    | T
-    | {
-        preferenceId?: T;
-        paymentId?: T;
-      };
-  billingAddress?:
-    | T
-    | {
-        name?: T;
-        company?: T;
-        phone?: T;
-        addressLine1?: T;
-        city?: T;
-        state?: T;
-        country?: T;
-        postalCode?: T;
-      };
-  shippingAddress?:
-    | T
-    | {
-        name?: T;
-        company?: T;
-        phone?: T;
-        addressLine1?: T;
-        city?: T;
-        state?: T;
-        country?: T;
-        postalCode?: T;
-      };
-  status?: T;
-  customer?: T;
-  customerEmail?: T;
-  order?: T;
-  cart?: T;
-  amount?: T;
-  currency?: T;
-  shippingCost?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stores_select".
- */
-export interface StoresSelect<T extends boolean = true> {
-  name?: T;
-  phone?: T;
-  addressLine1?: T;
-  city?: T;
-  state?: T;
-  country?: T;
-  postalCode?: T;
-  services?: T;
-  bookings?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services_select".
- */
-export interface ServicesSelect<T extends boolean = true> {
-  title?: T;
-  modalities?: T;
-  durationMinutes?: T;
-  bufferMinutes?: T;
-  priceInCOPEnabled?: T;
-  priceInCOP?: T;
-  stores?: T;
-  staff?: T;
-  bookings?: T;
-  description?: T;
-  images?: T;
-  layout?:
-    | T
-    | {
-        cta?: T | CallToActionBlockSelect<T>;
-        content?: T | ContentBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
-      };
-  redirectToWhatsApp?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        image?: T;
-        description?: T;
-      };
-  categories?: T;
-  generateSlug?: T;
-  slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "staff_select".
- */
-export interface StaffSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  phone?: T;
-  bio?: T;
-  services?: T;
-  stores?: T;
-  offersDelivery?: T;
-  workStartTime?: T;
-  workEndTime?: T;
-  workDays?: T;
-  blocks?: T;
-  bookings?: T;
-  photo?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "bookings_select".
- */
-export interface BookingsSelect<T extends boolean = true> {
-  customer?: T;
-  startDatetime?: T;
-  endDatetime?: T;
-  service?: T;
-  staff?: T;
-  modality?: T;
-  store?: T;
-  address?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "staff-blocks_select".
- */
-export interface StaffBlocksSelect<T extends boolean = true> {
-  reason?: T;
-  startTime?: T;
-  endTime?: T;
-  repeat?: T;
-  staff?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -2391,42 +1531,11 @@ export interface Footer {
  */
 export interface Configuration {
   id: number;
-  shop?: {
-    defaultShopType?: ('products' | 'services') | null;
+  site?: {
+    contactEmail?: string | null;
+    instagramUrl?: string | null;
+    facebookUrl?: string | null;
   };
-  whatsapp?: {
-    /**
-     * WhatsApp number used if you enable the option to redirect to WhatsApp in Products or Services. International format without +, e.g. 573001234567
-     */
-    whatsAppNumber?: string | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "mercadopago-payment".
- */
-export interface MercadopagoPayment {
-  id: number;
-  /**
-   * To use MercadoPago as a payment method, you must create a MercadoPago account and contact Zoren support to configure the integration.
-   */
-  enabled?: boolean | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "whatsapp-payment".
- */
-export interface WhatsappPayment {
-  id: number;
-  enabled?: boolean | null;
-  /**
-   * International format without +, e.g. 573001234567
-   */
-  whatsAppNumber?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2486,37 +1595,13 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "configuration_select".
  */
 export interface ConfigurationSelect<T extends boolean = true> {
-  shop?:
+  site?:
     | T
     | {
-        defaultShopType?: T;
+        contactEmail?: T;
+        instagramUrl?: T;
+        facebookUrl?: T;
       };
-  whatsapp?:
-    | T
-    | {
-        whatsAppNumber?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "mercadopago-payment_select".
- */
-export interface MercadopagoPaymentSelect<T extends boolean = true> {
-  enabled?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "whatsapp-payment_select".
- */
-export interface WhatsappPaymentSelect<T extends boolean = true> {
-  enabled?: T;
-  whatsAppNumber?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

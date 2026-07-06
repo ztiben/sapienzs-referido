@@ -20,13 +20,7 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { SlugField as SlugField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
 import { SystemPageView as SystemPageView_0da3aff317df8ccd90cec8455440d22e } from '@/modules/pages/components/system-page-view/system-page-view.component.client'
-import { PriceCell as PriceCell_e27bf7b8cc50640dcdd584767b8eac3c } from '@payloadcms/plugin-ecommerce/client'
-import { PriceInput as PriceInput_b91672ccd6e8b071c11142ab941fedfb } from '@payloadcms/plugin-ecommerce/rsc'
-import { VariantOptionsSelector as VariantOptionsSelector_b91672ccd6e8b071c11142ab941fedfb } from '@payloadcms/plugin-ecommerce/rsc'
-import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { CalendarNavLinkContainer as CalendarNavLinkContainer_9d6712edccd1bbbb61617dac2fac7ef1 } from '@/modules/admin/components/calendar-nav-link-container/calendar-nav-link-container.component'
 import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
-import { CalendarPage as CalendarPage_af05f6cb519918ccd57aa9a98509098b } from '@/modules/admin/components/calendar-page/calendar-page.component'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
@@ -52,12 +46,6 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/next/client#SlugField": SlugField_2b8867833a34864a02ddf429b0728a40,
   "@/modules/pages/components/system-page-view/system-page-view.component.client#SystemPageView": SystemPageView_0da3aff317df8ccd90cec8455440d22e,
-  "@payloadcms/plugin-ecommerce/client#PriceCell": PriceCell_e27bf7b8cc50640dcdd584767b8eac3c,
-  "@payloadcms/plugin-ecommerce/rsc#PriceInput": PriceInput_b91672ccd6e8b071c11142ab941fedfb,
-  "@payloadcms/plugin-ecommerce/rsc#VariantOptionsSelector": VariantOptionsSelector_b91672ccd6e8b071c11142ab941fedfb,
-  "@payloadcms/richtext-lexical/client#HorizontalRuleFeatureClient": HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "@/modules/admin/components/calendar-nav-link-container/calendar-nav-link-container.component#CalendarNavLinkContainer": CalendarNavLinkContainer_9d6712edccd1bbbb61617dac2fac7ef1,
   "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e,
-  "@/modules/admin/components/calendar-page/calendar-page.component#CalendarPage": CalendarPage_af05f6cb519918ccd57aa9a98509098b,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

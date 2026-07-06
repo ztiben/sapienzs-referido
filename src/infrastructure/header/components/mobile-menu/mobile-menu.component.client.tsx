@@ -58,10 +58,7 @@ export const MobileMenu: React.FC<Props> = ({ menu }) => {
             <hr className="my-2" />
             <ul className="flex flex-col gap-2">
               <li>
-                <Link href="/orders">{t('orders')}</Link>
-              </li>
-              <li>
-                <Link href="/account/addresses">{t('addresses')}</Link>
+                <Link href="/favorites">{t('favorites')}</Link>
               </li>
               <li>
                 <Link href="/account">{t('manageAccount')}</Link>

@@ -7,7 +7,6 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import { showFromOptions } from '../shared/utils/show-from-options.util'
 
 export const Archive: Block = {
   slug: 'archive',
@@ -55,19 +54,6 @@ export const Archive: Block = {
           value: 'selection',
         },
       ],
-    },
-    {
-      name: 'showFrom',
-      label: {
-        en: 'Show from',
-        es: 'Mostrar de',
-      },
-      type: 'select',
-      defaultValue: showFromOptions[0].value,
-      options: showFromOptions,
-      admin: {
-        condition: (_, siblingData) => siblingData.populateBy === 'category',
-      },
     },
     {
       name: 'categories',

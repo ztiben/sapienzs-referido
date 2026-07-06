@@ -13,7 +13,7 @@ type Props = {
 
 export const Search: React.FC<Props> = ({ className }) => {
   const { query, onSubmit } = useSearch()
-  const t = useTranslations('shop')
+  const t = useTranslations('deals')
 
   return (
     <form className={cn('relative w-full', className)} onSubmit={onSubmit}>

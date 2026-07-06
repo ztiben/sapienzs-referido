@@ -1,7 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
 import { publicAccess } from '@/infrastructure/access/public.access'
-import { features } from '@/infrastructure/features'
 
 export const Configuration: GlobalConfig = {
   slug: 'configuration',
@@ -14,70 +13,34 @@ export const Configuration: GlobalConfig = {
       type: 'tabs',
       tabs: [
         {
-          name: 'shop',
+          name: 'site',
           label: {
-            en: 'Shop',
-            es: 'Tienda',
+            en: 'Site',
+            es: 'Sitio',
           },
           fields: [
             {
-              name: 'defaultShopType',
-              type: 'select',
-              required: true,
-              defaultValue: features.services ? 'services' : 'products',
+              name: 'contactEmail',
+              type: 'email',
               label: {
-                en: 'Default items to show in shop page',
-                es: 'Ítems para mostrar de primeros en la página de tienda',
-              },
-              options: [
-                ...(features.products
-                  ? [
-                      {
-                        label: {
-                          en: 'Products',
-                          es: 'Productos',
-                        },
-                        value: 'products',
-                      },
-                    ]
-                  : []),
-                ...(features.services
-                  ? [
-                      {
-                        label: {
-                          en: 'Services',
-                          es: 'Servicios',
-                        },
-                        value: 'services',
-                      },
-                    ]
-                  : []),
-              ],
-              admin: {
-                condition: () => features.products && features.services,
+                en: 'Contact email',
+                es: 'Correo de contacto',
               },
             },
-          ],
-        },
-        {
-          name: 'whatsapp',
-          label: {
-            en: 'WhatsApp',
-            es: 'WhatsApp',
-          },
-          fields: [
             {
-              name: 'whatsAppNumber',
+              name: 'instagramUrl',
               type: 'text',
               label: {
-                en: 'WhatsApp number',
-                es: 'Número de WhatsApp',
+                en: 'Instagram URL',
+                es: 'URL de Instagram',
               },
-              admin: {
-                description: {
-                  en: 'WhatsApp number used if you enable the option to redirect to WhatsApp in Products or Services. International format without +, e.g. 573001234567',
-                  es: 'Número de WhatsApp usado si se habilita la opción de redirigir a WhatsApp en Productos o Servicios. Formato internacional sin +, ej. 573001234567',
-                },
+            },
+            {
+              name: 'facebookUrl',
+              type: 'text',
+              label: {
+                en: 'Facebook URL',
+                es: 'URL de Facebook',
               },
             },
           ],

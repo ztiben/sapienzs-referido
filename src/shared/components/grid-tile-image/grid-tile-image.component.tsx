@@ -1,5 +1,6 @@
 import type { Media as MediaType } from '@/payload-types'
 
+import type { SupportedCurrency } from '@/shared/bl/format-price.bl'
 import { Label } from '@/shared/components/label/label.component'
 import { Media } from '@/shared/components/media/media.component'
 import clsx from 'clsx'
@@ -10,6 +11,7 @@ type Props = {
   isInteractive?: boolean
   label?: {
     amount?: number
+    currencyCode?: SupportedCurrency
     position?: 'bottom' | 'center'
     title: string
   }
@@ -44,7 +46,14 @@ export const GridTileImage: React.FC<Props> = ({
           width={80}
         />
       ) : null}
-      {label ? <Label amount={label.amount} position={label.position} title={label.title} /> : null}
+      {label ? (
+        <Label
+          amount={label.amount}
+          currencyCode={label.currencyCode}
+          position={label.position}
+          title={label.title}
+        />
+      ) : null}
     </div>
   )
 }

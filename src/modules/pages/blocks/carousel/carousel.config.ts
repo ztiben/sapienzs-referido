@@ -1,7 +1,6 @@
 import type { Block } from 'payload'
 
 import { relationTo } from '@/modules/pages/blocks/shared/utils/relation-to.util'
-import { showFromOptions } from '../shared/utils/show-from-options.util'
 
 export const Carousel: Block = {
   slug: 'carousel',
@@ -30,19 +29,6 @@ export const Carousel: Block = {
           value: 'selection',
         },
       ],
-    },
-    {
-      name: 'showFrom',
-      label: {
-        en: 'Show from',
-        es: 'Mostrar de',
-      },
-      type: 'select',
-      defaultValue: showFromOptions[0].value,
-      options: showFromOptions,
-      admin: {
-        condition: (_, siblingData) => siblingData.populateBy === 'category',
-      },
     },
     {
       name: 'categories',

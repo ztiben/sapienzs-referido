@@ -10,15 +10,9 @@ import { useAccountNav } from './use-account-nav'
 
 type Props = {
   className?: string
-  showOrders?: boolean
-  showBookings?: boolean
 }
 
-export const AccountNav: React.FC<Props> = ({
-  className,
-  showOrders = false,
-  showBookings = false,
-}) => {
+export const AccountNav: React.FC<Props> = ({ className }) => {
   const { pathname } = useAccountNav()
   const t = useTranslations('navigation')
 
@@ -41,43 +35,15 @@ export const AccountNav: React.FC<Props> = ({
         <li>
           <Button asChild variant="link">
             <Link
-              href="/account/addresses"
+              href="/favorites"
               className={clsx('text-base-content/50 hover:text-base-content hover:no-underline', {
-                'text-base-content': pathname === '/account/addresses',
+                'text-base-content': pathname === '/favorites' || pathname.includes('/favorites'),
               })}
             >
-              {t('addresses')}
+              {t('favorites')}
             </Link>
           </Button>
         </li>
-
-        {showOrders && (
-          <li>
-            <Button
-              asChild
-              variant="link"
-              className={clsx('text-base-content/50 hover:text-base-content hover:no-underline', {
-                'text-base-content': pathname === '/orders' || pathname.includes('/orders'),
-              })}
-            >
-              <Link href="/orders">{t('orders')}</Link>
-            </Button>
-          </li>
-        )}
-
-        {showBookings && (
-          <li>
-            <Button
-              asChild
-              variant="link"
-              className={clsx('text-base-content/50 hover:text-base-content hover:no-underline', {
-                'text-base-content': pathname === '/bookings' || pathname.includes('/bookings'),
-              })}
-            >
-              <Link href="/bookings">{t('bookings')}</Link>
-            </Button>
-          </li>
-        )}
       </ul>
 
       <hr className="w-full border-white/5" />

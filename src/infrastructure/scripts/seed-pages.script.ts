@@ -1,36 +1,31 @@
 import 'dotenv/config'
 import type { RequiredDataFromCollectionSlug } from 'payload'
 
-import { features } from '@/infrastructure/features'
-
 type SeedPageDefinition = {
   title: string
   slug: string
   isSystemPage: boolean
-  condition?: boolean
 }
 
 const SEED_PAGES: SeedPageDefinition[] = [
   {
-    title: 'Find Order',
-    slug: 'find-order',
-    isSystemPage: true,
-    condition: features.products,
-  },
-  {
-    title: 'Account',
-    slug: 'account',
-    isSystemPage: true,
-  },
-  {
-    title: 'Shop',
-    slug: 'shop',
-    isSystemPage: true,
-    condition: features.products || features.services,
-  },
-  {
     title: 'Home',
     slug: 'home',
+    isSystemPage: false,
+  },
+  {
+    title: 'Divulgación de afiliados',
+    slug: 'divulgacion-afiliados',
+    isSystemPage: false,
+  },
+  {
+    title: 'Política de privacidad',
+    slug: 'privacidad',
+    isSystemPage: false,
+  },
+  {
+    title: 'Acerca de',
+    slug: 'acerca-de',
     isSystemPage: false,
   },
 ]
@@ -43,11 +38,9 @@ async function seedPages() {
 
   const payload = await getPayload({ config })
 
-  const pagesToSeed = SEED_PAGES.filter((page) => page.condition !== false)
+  payload.logger.info(`Seeding pages: ${SEED_PAGES.map((p) => p.slug).join(', ')}`)
 
-  payload.logger.info(`Seeding pages: ${pagesToSeed.map((p) => p.slug).join(', ')}`)
-
-  for (const page of pagesToSeed) {
+  for (const page of SEED_PAGES) {
     const existing = await payload.find({
       collection: 'pages',
       where: { slug: { equals: page.slug } },

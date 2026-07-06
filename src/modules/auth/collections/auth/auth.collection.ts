@@ -32,7 +32,7 @@ export const Users: CollectionConfig = {
       en: 'Users',
       es: 'Usuarios',
     },
-    defaultColumns: ['name', 'phone', 'roles'],
+    defaultColumns: ['name', 'email', 'roles'],
     useAsTitle: 'name',
   },
   auth: {
@@ -47,15 +47,6 @@ export const Users: CollectionConfig = {
       },
       type: 'text',
       required: true,
-    },
-    {
-      name: 'phone',
-      label: {
-        en: 'Phone',
-        es: 'Teléfono',
-      },
-      type: 'text',
-      unique: true,
     },
     {
       name: 'roles',
@@ -85,45 +76,17 @@ export const Users: CollectionConfig = {
       ],
     },
     {
-      name: 'orders',
+      name: 'favorites',
       label: {
-        en: 'Orders',
-        es: 'Órdenes',
+        en: 'Favorites',
+        es: 'Favoritos',
       },
       type: 'join',
-      collection: 'orders',
-      on: 'customer',
+      collection: 'favorites',
+      on: 'user',
       admin: {
         allowCreate: false,
-        defaultColumns: ['id', 'createdAt', 'total', 'currency', 'items'],
-      },
-    },
-    {
-      name: 'carts',
-      label: {
-        en: 'Carts',
-        es: 'Carritos',
-      },
-      type: 'join',
-      collection: 'carts',
-      on: 'customer',
-      admin: {
-        allowCreate: false,
-        defaultColumns: ['id', 'createdAt', 'total', 'currency', 'items'],
-      },
-    },
-    {
-      name: 'addresses',
-      label: {
-        en: 'Addresses',
-        es: 'Direcciones',
-      },
-      type: 'join',
-      collection: 'addresses',
-      on: 'customer',
-      admin: {
-        allowCreate: false,
-        defaultColumns: ['id'],
+        defaultColumns: ['id', 'deal', 'createdAt'],
       },
     },
   ],

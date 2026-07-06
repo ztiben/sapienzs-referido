@@ -1,2 +1,0 @@
-export const DEFAULT_BUFFER_MINUTES = 0
-export const MAX_DURATION_MINUTES = 480

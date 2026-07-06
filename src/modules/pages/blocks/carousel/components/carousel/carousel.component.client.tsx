@@ -35,7 +35,7 @@ export const CarouselClient: React.FC<{ items: DisplayItem[] }> = ({ items }) =>
           >
             <Link className="relative h-full w-full" href={`/${item.collection}/${item.slug}`}>
               <GridTileImage
-                label={{ amount: item.price, title: item.title }}
+                label={{ amount: item.price, currencyCode: item.currency, title: item.title }}
                 media={item.image as Media}
               />
             </Link>

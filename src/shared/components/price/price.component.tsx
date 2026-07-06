@@ -1,66 +1,34 @@
-'use client'
-import { formatPrice } from '@/shared/bl/currency.bl'
 import React from 'react'
 
-import { usePrice } from './use-price'
+import { formatPrice, type SupportedCurrency } from '@/shared/bl/format-price.bl'
+import { cn } from '@/shared/utils/cn.util'
 
-type BaseProps = {
-  className?: string
-  currencyCodeClassName?: string
-  as?: 'span' | 'p'
-}
-
-type PriceFixed = {
+type Props = {
   amount?: number | null
-  currencyCode?: string
-  highestAmount?: never
-  lowestAmount?: never
+  currencyCode?: SupportedCurrency
+  className?: string
+  as?: 'span' | 'p'
+  /** Renders the price crossed out (for original prices next to a deal price). */
+  strikethrough?: boolean
 }
 
-type PriceRange = {
-  amount?: never
-  currencyCode?: string
-  highestAmount?: number | null
-  lowestAmount?: number | null
-}
-
-type Props = BaseProps & (PriceFixed | PriceRange)
-
-export const Price = ({
+export const Price: React.FC<Props> = ({
   amount,
+  currencyCode,
   className,
-  highestAmount,
-  lowestAmount,
-  currencyCode: currencyCodeFromProps,
   as = 'p',
-}: Props & React.ComponentProps<'p'>) => {
-  const { currencyCode } = usePrice(currencyCodeFromProps)
+  strikethrough = false,
+}) => {
+  if (amount === undefined || amount === null) return null
 
   const Element = as
 
-  if (typeof amount === 'number') {
-    return (
-      <Element className={className} suppressHydrationWarning>
-        {formatPrice(amount, currencyCode)}
-      </Element>
-    )
-  }
-
-  if (highestAmount && highestAmount !== lowestAmount) {
-    return (
-      <Element className={className} suppressHydrationWarning>
-        {`${formatPrice(lowestAmount, currencyCode)} ${formatPrice(lowestAmount, currencyCode) && formatPrice(highestAmount, currencyCode) ? '-' : ''} ${formatPrice(highestAmount, currencyCode)}`}
-      </Element>
-    )
-  }
-
-  if (lowestAmount) {
-    return (
-      <Element className={className} suppressHydrationWarning>
-        {formatPrice(lowestAmount, currencyCode)}
-      </Element>
-    )
-  }
-
-  return null
+  return (
+    <Element
+      className={cn(strikethrough && 'line-through opacity-60', className)}
+      suppressHydrationWarning
+    >
+      {formatPrice(amount, currencyCode)}
+    </Element>
+  )
 }

@@ -76,8 +76,8 @@ export const InstagramFeed: Block = {
           required: true,
           admin: {
             description: {
-              en: 'Link a product or service to display below the Instagram post',
-              es: 'Vincula un producto o servicio para mostrar debajo del post de Instagram',
+              en: 'Link a deal to display below the Instagram post',
+              es: 'Vincula una oferta para mostrar debajo del post de Instagram',
             },
           },
         },

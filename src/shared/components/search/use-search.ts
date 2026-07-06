@@ -21,7 +21,7 @@ export const useSearch = () => {
       newParams.delete('q')
     }
 
-    router.push(createUrl('/shop', newParams))
+    router.push(createUrl('/deals', newParams))
   }
 
   return { query, onSubmit }

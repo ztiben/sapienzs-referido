@@ -1,4 +1,3 @@
-import { features } from '@/infrastructure/features'
 import config from '@payload-config'
 import type { MetadataRoute } from 'next'
 import { getPayload } from 'payload'
@@ -8,9 +7,13 @@ const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || ''
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayload({ config })
 
-  const [products, services, pages] = await Promise.all([
-    features.products ? payload.find({ collection: 'products', limit: 1000, depth: 0 }) : null,
-    features.services ? payload.find({ collection: 'services', limit: 1000, depth: 0 }) : null,
+  const [deals, pages] = await Promise.all([
+    payload.find({
+      collection: 'deals',
+      limit: 1000,
+      depth: 0,
+      where: { _status: { equals: 'published' } },
+    }),
     payload.find({
       collection: 'pages',
       limit: 1000,
@@ -21,28 +24,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
-    { url: `${baseUrl}/shop`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
+    { url: `${baseUrl}/deals`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
   ]
 
-  const productRoutes: MetadataRoute.Sitemap =
-    products?.docs
-      .filter((p) => p.slug)
-      .map((p) => ({
-        url: `${baseUrl}/products/${p.slug}`,
-        lastModified: new Date(p.updatedAt),
-        changeFrequency: 'weekly',
-        priority: 0.8,
-      })) ?? []
-
-  const serviceRoutes: MetadataRoute.Sitemap =
-    services?.docs
-      .filter((s) => s.slug)
-      .map((s) => ({
-        url: `${baseUrl}/services/${s.slug}`,
-        lastModified: new Date(s.updatedAt),
-        changeFrequency: 'weekly',
-        priority: 0.7,
-      })) ?? []
+  const dealRoutes: MetadataRoute.Sitemap = deals.docs
+    .filter((d) => d.slug)
+    .map((d) => ({
+      url: `${baseUrl}/deals/${d.slug}`,
+      lastModified: new Date(d.updatedAt),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    }))
 
   const pageRoutes: MetadataRoute.Sitemap = pages.docs
     .filter((p) => p.slug && p.slug !== 'home')
@@ -53,5 +45,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }))
 
-  return [...staticRoutes, ...productRoutes, ...serviceRoutes, ...pageRoutes]
+  return [...staticRoutes, ...dealRoutes, ...pageRoutes]
 }

@@ -1,13 +1,8 @@
+import type { Deal, Media, ThreeItemGridBlock as ThreeItemGridBlockProps } from '@/payload-types'
 import type { DisplayItem } from '@/shared/utils/to-display-item.util'
-import type {
-  Media,
-  Product,
-  Service,
-  ThreeItemGridBlock as ThreeItemGridBlockProps,
-} from '@/payload-types'
 
-import { toDisplayItem } from '@/shared/utils/to-display-item.util'
 import { GridTileImage } from '@/shared/components/grid-tile-image/grid-tile-image.component'
+import { toDisplayItem } from '@/shared/utils/to-display-item.util'
 import Link from 'next/link'
 import type { DefaultDocumentIDType } from 'payload'
 import React from 'react'
@@ -26,6 +21,7 @@ export const ThreeItemGridItem: React.FC<Props> = ({ item, size }) => {
         <GridTileImage
           label={{
             amount: item.price,
+            currencyCode: item.currency,
             position: size === 'full' ? 'center' : 'bottom',
             title: item.title,
           }}
@@ -49,10 +45,7 @@ export const ThreeItemGridBlock: React.FC<
       if (typeof entry === 'object' && entry !== null && 'relationTo' in entry) {
         const doc = entry.value
         if (typeof doc === 'object' && doc !== null) {
-          return toDisplayItem(
-            doc as Product | Service,
-            entry.relationTo as 'products' | 'services',
-          )
+          return toDisplayItem(doc as Deal)
         }
       }
       return null

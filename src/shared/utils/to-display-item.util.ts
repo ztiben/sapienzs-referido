@@ -1,47 +1,31 @@
-import type { Media, Product, Service, Variant } from '@/payload-types'
-import { getPriceField } from '@/shared/bl/currency.bl'
+import type { Deal, Media, Retailer } from '@/payload-types'
+import type { SupportedCurrency } from '@/shared/bl/format-price.bl'
 
 export type DisplayItem = {
   title: string
   slug: string
-  collection: 'products' | 'services'
+  collection: 'deals'
   image?: Media | number | null
   price?: number
-  enableVariants?: boolean | null
-  variants?: Product['variants']
+  originalPrice?: number
+  currency?: SupportedCurrency
+  retailerName?: string
+  expiresAt?: string | null
 }
 
-const priceField = getPriceField<Product>()
-const variantPriceField = getPriceField<Variant>()
-
-export function toDisplayItem(
-  doc: Product | Service,
-  collection: 'products' | 'services',
-): DisplayItem {
-  let price = ((doc as unknown as Record<string, unknown>)[priceField as string] as number | undefined) || undefined
-
-  if (collection === 'products') {
-    const product = doc as Product
-    if (product.enableVariants && product.variants?.docs?.length) {
-      const variant = product.variants.docs[0]
-      if (variant && typeof variant === 'object' && variant[variantPriceField]) {
-        price = variant[variantPriceField] as number
-      }
-    }
-  }
-
-  const image =
-    collection === 'products'
-      ? (doc as Product).gallery?.[0]?.image
-      : (doc as Service).images?.[0]
+export function toDisplayItem(doc: Deal): DisplayItem {
+  const retailer = doc.retailer
 
   return {
     title: doc.title,
     slug: doc.slug,
-    collection,
-    image: image ?? null,
-    price,
-    enableVariants: collection === 'products' ? (doc as Product).enableVariants : false,
-    variants: collection === 'products' ? (doc as Product).variants : undefined,
+    collection: 'deals',
+    image: doc.image ?? null,
+    price: doc.dealPrice,
+    originalPrice: doc.originalPrice,
+    currency: (doc.currency as SupportedCurrency | null | undefined) ?? undefined,
+    retailerName:
+      retailer && typeof retailer === 'object' ? (retailer as Retailer).name : undefined,
+    expiresAt: doc.expiresAt ?? null,
   }
 }

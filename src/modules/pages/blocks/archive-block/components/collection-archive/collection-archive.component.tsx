@@ -2,7 +2,7 @@ import { cn } from '@/shared/utils/cn.util'
 import React from 'react'
 
 import type { DisplayItem } from '@/shared/utils/to-display-item.util'
-import { ProductGridItem } from '@/shared/components/product-grid-item/product-grid-item.component'
+import { DealCard } from '@/shared/components/deal-card/deal-card.component'
 
 export type Props = {
   posts: DisplayItem[]
@@ -19,7 +19,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
             if (typeof item === 'object' && item !== null) {
               return (
                 <div className="col-span-4" key={index}>
-                  <ProductGridItem item={item} />
+                  <DealCard item={item} />
                 </div>
               )
             }
