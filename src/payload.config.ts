@@ -40,6 +40,11 @@ export default buildConfig({
   },
   collections: [Users, Pages, Categories, Media, Retailers, Deals, Favorites, DealReports, Subscribers],
   db: vercelPostgresAdapter({
+    // In production Payload disables schema `push` by default. Setting
+    // PAYLOAD_DB_PUSH=true forces it on so the very first Vercel deploy can
+    // create the schema on an empty Neon database (all CREATE TABLE, runs
+    // non-interactively). Before launch, switch to migrations and unset it.
+    push: process.env.PAYLOAD_DB_PUSH === 'true' ? true : undefined,
     pool: {
       connectionString: process.env.POSTGRES_URL || '',
     },
