@@ -87,7 +87,12 @@ export const plugins: Plugin[] = [
   }),
   vercelBlobStorage({
     collections: {
-      ['media']: true,
+      // Media is fully public (deal images, retailer logos), so serve it straight
+      // from the public Blob URL instead of proxying through Payload's
+      // access-control route (/api/media/file/...), which adds a serverless hop.
+      ['media']: {
+        disablePayloadAccessControl: true,
+      },
     },
     token: process.env.BLOB_READ_WRITE_TOKEN || '',
     clientUploads: true,
