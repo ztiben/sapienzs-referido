@@ -24,7 +24,10 @@ export const useImage = (props: MediaProps) => {
     width = widthFromProps ?? fullWidth
     height = heightFromProps ?? fullHeight
     alt = altFromResource
-    src = `${process.env.NEXT_PUBLIC_SERVER_URL}${url}`
+    // `url` is already absolute when media is served straight from Vercel Blob
+    // (disablePayloadAccessControl); only prefix the server URL for relative paths.
+    src =
+      url && /^https?:\/\//.test(url) ? url : `${process.env.NEXT_PUBLIC_SERVER_URL}${url ?? ''}`
   }
 
   // NOTE: used by the browser to pick which image to download per screen size.
