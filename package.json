@@ -20,6 +20,7 @@
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" playwright test --config=playwright.config.ts",
     "seed:pages": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts NODE_OPTIONS='--no-deprecation --import=tsx/esm' tsx src/infrastructure/scripts/seed-pages.script.ts",
     "seed:retailers": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts NODE_OPTIONS='--no-deprecation --import=tsx/esm' tsx src/infrastructure/scripts/seed-retailers.script.ts",
+    "import:amazon": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts NODE_OPTIONS='--no-deprecation --import=tsx/esm' tsx src/infrastructure/scripts/import-amazon-deals.script.ts",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
