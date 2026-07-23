@@ -45,7 +45,14 @@ async function importAmazonDeals() {
   const configModule = await import('@payload-config')
   const payload = await getPayload({ config: configModule.default })
 
-  const raw = readFileSync(path.resolve(dirname, 'data/amazon-deals.json'), 'utf-8')
+  // Optional CLI arg: path to a deals JSON file (defaults to the bundled data).
+  const inputArg = process.argv[2]
+  const jsonPath = inputArg
+    ? path.resolve(process.cwd(), inputArg)
+    : path.resolve(dirname, 'data/amazon-deals.json')
+  payload.logger.info(`Reading deals from: ${jsonPath}`)
+
+  const raw = readFileSync(jsonPath, 'utf-8')
   const { deals } = JSON.parse(raw) as { deals: SourceDeal[] }
 
   // Resolve the Amazon retailer (must be seeded first via `pnpm seed:retailers`).
