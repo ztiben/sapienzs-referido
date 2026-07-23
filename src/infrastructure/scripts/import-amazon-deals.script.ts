@@ -156,6 +156,7 @@ async function importAmazonDeals() {
           id: existing.docs[0].id,
           data: baseData,
           overrideAccess: true,
+          context: { disableRevalidate: true },
         })
         updated++
         payload.logger.info(`Updated: ${asin} — ${deal.title.slice(0, 50)}`)
@@ -169,6 +170,7 @@ async function importAmazonDeals() {
             slug: `${slugify(deal.title)}-${asin.toLowerCase()}`,
           },
           overrideAccess: true,
+          context: { disableRevalidate: true },
         })
         created++
         payload.logger.info(`Created: ${asin} — ${deal.title.slice(0, 50)}`)
