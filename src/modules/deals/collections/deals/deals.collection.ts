@@ -14,6 +14,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 
 import { favoriteEndpoint } from '../../endpoints/favorite.endpoint'
+import { importDealsEndpoint } from '../../endpoints/import-deals.endpoint'
 import { validateDealBeforeChange } from '../../uc/validate-deal.uc'
 import { revalidateDeal, revalidateDealDelete } from './hooks/revalidate-deal'
 
@@ -38,6 +39,11 @@ export const Deals: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'retailer', 'dealPrice', 'featured', '_status', 'updatedAt'],
+    components: {
+      beforeListTable: [
+        '@/modules/deals/components/import-deals-button/import-deals-button.component.client#ImportDealsButton',
+      ],
+    },
     group: {
       en: 'Catalog',
       es: 'Catálogo',
@@ -57,7 +63,7 @@ export const Deals: CollectionConfig = {
         req,
       }),
   },
-  endpoints: [favoriteEndpoint],
+  endpoints: [favoriteEndpoint, importDealsEndpoint],
   fields: [
     {
       name: 'title',

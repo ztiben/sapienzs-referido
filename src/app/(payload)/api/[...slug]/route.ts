@@ -18,3 +18,7 @@ export const PATCH = REST_PATCH(config)
 
 export const PUT = REST_PUT(config)
 export const OPTIONS = REST_OPTIONS(config)
+
+// Give slow REST calls (e.g. POST /api/deals/import, which downloads + uploads
+// images) more headroom than the default serverless limit.
+export const maxDuration = 60
